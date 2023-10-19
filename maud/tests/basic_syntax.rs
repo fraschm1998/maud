@@ -182,6 +182,25 @@ fn hyphens_in_attribute_names() {
 }
 
 #[test]
+fn many_colons_in_names() {
+    let result =
+        html! { namespace:other-namespace:this is:some:sentence="false" of:course:it:is {} };
+    assert_eq!(
+        result.into_string(),
+        r#"<namespace:other-namespace:this is:some:sentence="false" of:course:it:is></namespace:other-namespace:this>"#
+    );
+}
+
+#[test]
+fn string_literals_in_attribute_names() {
+    let result = html! { this "@sentence:-is.not"="false" of-course {} };
+    assert_eq!(
+        result.into_string(),
+        r#"<this @sentence:-is.not="false" of-course></this>"#
+    );
+}
+
+#[test]
 fn class_shorthand() {
     let result = html! { p { "Hi, " span.name { "Lyra" } "!" } };
     assert_eq!(
